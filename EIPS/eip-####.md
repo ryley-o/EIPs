@@ -39,6 +39,7 @@ While blockchains provide a strong foundation for tracking the provenance of dig
 **_Examples:_**
 
 - An artist could post a message for an NFT to provide context around the creation of the artwork.
+- An artist could post a message for an NFT to provide display details such as resolution, preferred filetype, codec, etc. This ensures that as display technologies advance, the presentation of the artwork can continue to meet the artist's vision.
 - A collector could post a message for an NFT to provide context around the acquisition of the artwork.
 - A museum could post a message for an NFT to provide context around the exhibition of the artwork.
 
