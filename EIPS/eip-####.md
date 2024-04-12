@@ -40,6 +40,7 @@ While blockchains provide a strong foundation for tracking the provenance of dig
 
 - An artist could post a message for an NFT to provide context around the creation of the artwork.
 - An artist could post a message for an NFT to provide display details such as resolution, preferred filetype, codec, etc. This ensures that as display technologies advance, the presentation of the artwork can continue to meet the artist's vision.
+- A collector could post a message for an NFT detailing its role in representing a logo, brand, or company.
 - A collector could post a message for an NFT to provide context around the acquisition of the artwork.
 - A museum could post a message for an NFT to provide context around the exhibition of the artwork.
 
@@ -123,7 +124,7 @@ interface INFTProvenanceMessageRegistry {
      * @param tokenId ID of the token to be queried
      * @return count Number of messages posted about the token
      */
-    function getMessageCount(address tokenAddress, uint256 tokenId) external view returns (uint256);
+    function getMessageCountForToken(address tokenAddress, uint256 tokenId) external view returns (uint256);
 
     /**
      * @notice Get a message posted about an ERC-721 token by index.
@@ -133,7 +134,21 @@ interface INFTProvenanceMessageRegistry {
      * @param index Index of the message to be queried
      * @return message Info about the message
      */
-    function getMessageAtIndex(address tokenAddress, uint256 tokenId, uint256 index) external view returns (Message memory);
+    function getMessageAtIndexForToken(address tokenAddress, uint256 tokenId, uint256 index) external view returns (Message memory);
+
+    /**
+     * @notice Get all messages posted about ERC-721 tokens by a specific owner address.
+     * @param owner Address of the owner who posted the messages
+     * @return messages Array of Message structs containing the messages posted about the tokens
+     */
+    function getMessagesByOwner(address owner) external view returns (Message[] memory);
+
+    /**
+     * @notice Get all messages posted about all token ids on a specific ERC-721 token contract.
+     * @param tokenAddress Address of the ERC-721 token contract
+     * @return messages Array of Message structs containing the messages posted about the tokens
+     */
+    function getAllMessagesForTokenAddress(address tokenAddress) external view returns (Message[] memory);
 }
 ```
 
@@ -155,9 +170,9 @@ The NFT Provenance Message Registry stores messages on-chain to ensure that the 
 
 The NFT Provenance Message Registry only allows the owner of an NFT to post messages about the NFT. The owner of an asset is properly incentivized to post messages that add value to the NFT asset. This aligned incentive will prevent a great deal of spam on the registry, especially for tokens of historical relevance.
 
-### Message count and index
+### Message Count, Messages by Owner, and Messages by Token Address
 
-The NFT Provenance Message Registry provides functions to get the number of messages posted about an NFT and to get a message by index. This allows for gas-bounded, simple access to the messages posted about an NFT, enabling projects to integrate the messages into their flow.
+The NFT Provenance Message Registry provides comprehensive functions for accessing provenance data. It allows for retrieving all messages posted by a specific owner address, fetching the number of messages posted about a particular NFT, and accessing messages by their index within a token's message array. Additionally, the registry can retrieve all messages associated with each token ID under a specific token address. These functions allow for gas-bounded, simple access to the messages posted about an NFT, enabling projects to integrate the messages into their flow.
 
 ## Backwards Compatibility
 
